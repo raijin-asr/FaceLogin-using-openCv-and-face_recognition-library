@@ -1,13 +1,16 @@
 import cv2
-import face_recognition
+import face_recognition #cant install it even after installing and setting up cmake, dlib, visual studio build tools
 
+#face encoding first image
 img = cv2.imread("images/known/messi.jpg")
 rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 img_encoding = face_recognition.face_encodings(rgb_img)[0]
 
-img = cv2.imread("images/unknown/messi1.jpg")
-rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img_encoding = face_recognition.face_encodings(rgb_img)[0]
+#face encoding second image
+img2 = cv2.imread("images/unknown/messi1.jpg")
+rgb_img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+img_encoding2 = face_recognition.face_encodings(rgb_img2)[0]
 
+#comparing first and second images
 result = face_recognition.compare_faces([img_encoding], img_encoding2)
 print("Result: ", result)
