@@ -1,5 +1,6 @@
 import cv2
 import face_recognition #cant install it even after installing and setting up cmake, dlib, visual studio build tools
+from simple_facerec import SimpleFacerec
 
 #face encoding first image
 img = cv2.imread("images/known/messi.jpg")
@@ -14,3 +15,7 @@ img_encoding2 = face_recognition.face_encodings(rgb_img2)[0]
 #comparing first and second images
 result = face_recognition.compare_faces([img_encoding], img_encoding2)
 print("Result: ", result)
+
+cv2.imshow("Img",img)
+cv2.imshow("Img2",img2)
+cv2.waitKey(8)
