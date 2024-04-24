@@ -1,6 +1,5 @@
 import cv2
-import face_recognition #cant install it even after installing and setting up cmake, dlib, visual studio build tools
-from simple_facerec import SimpleFacerec
+import face_recognition #installed it even after manually installing and setting up cmake, dlib, visual studio build tools
 
 #face encoding first image
 img = cv2.imread("images/known/messi.jpg")
