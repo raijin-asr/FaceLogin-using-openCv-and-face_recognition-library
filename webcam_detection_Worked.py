@@ -1,6 +1,6 @@
-import dlib
 import cv2
 import face_recognition
+import dlib
 import os
 import numpy as np
 import time
@@ -45,50 +45,49 @@ while True:
 
     # List to store matching names
     matching_names = []
+    found_name = "Unknown"
 
-    if len(faces) == 1:
-        # Only proceed if exactly one face is detected
-        for face in faces:
-            # Get the face coordinates
-            x1, y1, x2, y2 = face.left(), face.top(), face.right(), face.bottom()
+    # First scan all faces
+    for face in faces:
+        # Get the face coordinates
+        x1, y1, x2, y2 = face.left(), face.top(), face.right(), face.bottom()
 
-            # Crop the face from the frame
-            face_img = frame[y1:y2, x1:x2]
+        # Crop the face from the frame
+        face_img = frame[y1:y2, x1:x2]
 
-            # Resize face image to a fixed size for face recognition (e.g., 128x128)
-            face_img_resized = cv2.resize(face_img, (128, 128))
+        # Check if the face image is not empty
+        if not face_img.size:
+            continue  # Skip this face if the image is empty
 
-            # Encode the face using dlib's face recognition model
-            face_encodings = face_recognition.face_encodings(face_img_resized)
-            
-            if face_encodings:
-                # Perform face matching with known encodings
-                found_name = "Unknown"
-                for name, known_encoding in known_encodings.items():
-                    # Compare face encodings
-                    match = face_recognition.compare_faces([known_encoding], face_encodings[0])
-                    if match[0]:
-                        found_name = name
-                        break
+        # Resize face image to a fixed size for face recognition (e.g., 128x128)
+        face_img_resized = cv2.resize(face_img, (128, 128))
 
-                # Draw rectangle and label on the frame
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.putText(frame, found_name, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+        # Encode the face using dlib's face recognition model
+        face_encodings = face_recognition.face_encodings(face_img_resized)
+        
+        if face_encodings:
+            # Perform face matching with known encodings
+            for name, known_encoding in known_encodings.items():
+                # Compare face encodings
+                match = face_recognition.compare_faces([known_encoding], face_encodings[0])
+                if match[0]:
+                    found_name = name
+                    break
 
-                # Check if the detected face matches a known face
-                if found_name != "Unknown":
-                    if start_time is None:
-                        start_time = time.time()
-                    elif time.time() - start_time >= 7:  # show login successful after this time
-                        login_successful = True
-                else:
-                    start_time = None  # Reset start time if unknown face detected
+            # Draw rectangle and label on the frame
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(frame, found_name, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
 
+    # After scanning, proceed if there is a matching face and only one face in the frame
+    if len(faces) == 1 and found_name != "Unknown":
+        if start_time is None:
+            start_time = time.time()
+        elif time.time() - start_time >= 3:  # Show "Login Successful" after 3 seconds
+            login_successful = True
     else:
-        # Reset start time if multiple faces detected
+        # Reset start time if multiple faces detected or no matching face found
         start_time = None
         login_successful = False
-
 
     # Display "Login Successful" message after 3 seconds and redirect to website if conditions are met
     if login_successful and not welcome_displayed:
@@ -115,7 +114,7 @@ while True:
             break  # Break the loop after redirecting
 
     # Display the frame
-    cv2.imshow("Frame", frame)
+    cv2.imshow("Face Login through Webcam", frame)
 
     # Break the loop on pressing 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):

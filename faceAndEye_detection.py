@@ -50,7 +50,7 @@ def detect_faces_eyes_in_image(image_path,filename):
 # image_path = 'images/known/messi.jpg'
 image_path = 'images/known/Ameer.png'
 filename = os.path.splitext(os.path.basename(image_path))[0]
-detect_faces_eyes_in_image(image_path, filename)
+#detect_faces_eyes_in_image(image_path, filename)
 
 #Face Detection in Webcam
 def detect_faces_in_webcam():
@@ -109,5 +109,5 @@ def detect_faces_in_webcam():
     cap.release()
     cv2.destroyAllWindows()
 
-#detect_faces_in_webcam() #calling function
+detect_faces_in_webcam() #calling function
 
