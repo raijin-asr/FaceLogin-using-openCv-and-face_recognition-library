@@ -99,10 +99,14 @@ while True:
         # Display "Welcome" message for 5 seconds
         cv2.putText(frame, f"Welcome, {found_name}!", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         if time.time() - welcome_start_time >= 5:
+            # Absolute path to the Jupyter Notebook executable within the objenv virtual environment
+            jupyter_executable = r"D:\PROJECTS\Python\Object Detection Project\objenv\Scripts\jupyter"
+
+            # Absolute path to the Jupyter Notebook file
+            notebook_file_path = r"D:\PROJECTS\Python\Object Detection Project\ObjectDetection.ipynb"
+
             # Open Jupyter Notebook file in web browser
-            notebook_file_path = "D:\\PROJECTS\\Python\\Object Detection Project\\ObjectDetection.ipynb"
-            subprocess.Popen(['jupyter', 'notebook', notebook_file_path])
-           
+            subprocess.Popen([jupyter_executable, 'notebook', notebook_file_path])           
             break  # Break the loop after redirecting
 
     # Display the frame
