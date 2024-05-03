@@ -6,7 +6,7 @@ https://www.google.com/search?sca_esv=65b627a4699ea87d&sxsrf=ACQVn09257uvPl7qwfl
 -------------------------
 
 Youtube:
-https://www.youtube.com/watch?v=MZ4jPU75iC4&t=177s  (sloved dlib issue and face_recognition issue)
+https://www.youtube.com/watch?v=MZ4jPU75iC4&t=177s  (solved dlib issue and face_recognition issue)
 -----------------
 
 Github: (manually download dlib from here and install in virtual env)
