@@ -1,0 +1,10 @@
+
+path: D:\PROJECTS\Python\Face Login using OpenCV\data\known  # dataset root dir
+train: images/train  # train images (relative to 'path')
+val: images/train  # val images (relative to 'path')
+
+# Classes
+names:
+  0: ameer
+  1: badri
+  2: krishna
